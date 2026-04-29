@@ -1,19 +1,21 @@
-from election_assistant.assistant import generate_guidance
+from election_assistant.faq import answer_question
 
 
 def main() -> None:
-    print("Hi — I can help you vote with a simple plan.")
-    state = input("What state are you voting in? ").strip()
-    first_time = input("Is this your first time voting? (Yes/No) ").strip()
-    method = input(
-        "How do you plan to vote? (In-person early / Election Day / Mail or absentee / Not sure) "
-    ).strip()
+    print("Hi — ask me anything about voting and I’ll do my best to answer.")
+    print("Try questions like: registration, ID requirements, mail ballots, polling place, or issue help.")
 
-    print("\nWould you like details on: registration, ID requirements, mail ballot rules, polling place, issue help?")
-    topic = input("Optional topic (press Enter to skip): ").strip()
+    while True:
+        question = input("\nAsk a question (or type 'quit' to exit): ").strip()
+        if not question:
+            print("Type a question about voting, or enter 'quit' to exit.")
+            continue
 
-    output = generate_guidance(state, first_time, method, topic if topic else None)
-    print("\n" + output)
+        if question.lower() in {"quit", "exit", "bye"}:
+            print("Goodbye! Vote safely.")
+            break
+
+        print("\n" + answer_question(question))
 
 
 if __name__ == "__main__":
